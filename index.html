@@ -1,8 +1,27 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
     <style>
+        .chart rect {
+            fill: steelblue;
+        }
+    </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <p>Here are the magic numbers from Lost: <span id="data"></span></p>
+    <svg class="chart" width="120" height="500"></svg>
+    <script>
+        var data = [4, 8, 15, 16, 23, 42];
+        document.getElementById("data").innerHTML = data;
+        d3.select(".chart")
+            .selectAll("rect")
+            .data(data)
+            .enter().append("rect")
+            .attr("width", 19)
+            .attr("height", function(d) { return d * 10; })
+            .attr("x", function(d, i) { return i * 20; })
+            .attr("y", function(d) { return 420 - d * 10; });
+    </script>
 </body>
 </html>
