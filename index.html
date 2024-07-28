@@ -10,7 +10,7 @@
 </head>
 <body>
     <p>Here are the magic numbers from Lost: <span id="csvdata"></span></p>
-    <svg class="chart" width="120" height="500"></svg>
+    <svg class="chart" width="800" height="500"></svg>
     <button id="goButton">Go</button>
     <script>
         // Load the data from CSV file
@@ -18,17 +18,21 @@
             if (error) throw error;
 
             // Extract values from the data
-            var values = data.map(function(d) { return + d.csvdata; });
+            var values = data.map(function(d) { return +d.csvdata; });
             document.getElementById("csvdata").innerHTML = values;
+
+            var chartHeight = 500;
+            var barWidth = 30;
+            var barPadding = 20;
 
             d3.select(".chart")
                 .selectAll("rect")
                 .data(values)
                 .enter().append("rect")
-                .attr("width", 19)
-				.attr("height", function(d) { return d / 1000; })
-				.attr("x", function(d, i) { return i * 40; })
-				.attr("y", function(d) { return 500 - d / 1000; });
+                .attr("width", barWidth)
+                .attr("height", function(d) { return d / 100; })
+                .attr("x", function(d, i) { return i * (barWidth + barPadding); })
+                .attr("y", function(d) { return chartHeight - d / 100; });
         });
 
         document.getElementById("goButton").addEventListener("click", function() {
