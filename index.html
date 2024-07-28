@@ -10,25 +10,25 @@
 </head>
 <body>
     <p>Here are the magic numbers from Lost: <span id="csvdata"></span></p>
-    <svg class="chart" width="240" height="1000"></svg>
+    <svg class="chart" width="240" height="500"></svg>
     <button id="goButton">Go</button>
     <script>
         // Load the data from CSV file
-        d3.csv("data.csv", function(error, data) {
+        d3.csv("Apartment_financial_report_2024_first_6_months.csv", function(error, data) {
             if (error) throw error;
 
             // Extract values from the data
-            var values = data.map(function(d) { return +d.csvdata; });
-            document.getElementById("csvdata").innerHTML = values;
+            var values = data.map(function(d) { return +d["EGI(Total_Revenue)"]; });
+            document.getElementById("csvdata").innerHTML = values.join(", ");
 
             d3.select(".chart")
                 .selectAll("rect")
                 .data(values)
                 .enter().append("rect")
                 .attr("width", 19)
-                .attr("height", function(d) { return d * 10; })
-                .attr("x", function(d, i) { return i * 20; })
-                .attr("y", function(d) { return 840 - d * 10; });
+                .attr("height", function(d) { return d / 1000; })
+                .attr("x", function(d, i) { return i * 40; })
+                .attr("y", function(d) { return 500 - d / 1000; });
         });
 
         document.getElementById("goButton").addEventListener("click", function() {
