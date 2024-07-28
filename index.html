@@ -9,7 +9,7 @@
     </style>
 </head>
 <body>
-    <p>Here are the magic numbers from Lost: <span id="csvdata"></span></p>
+    <p>2024 first 6 month Revenue is : <span id="csvdata"></span></p>
     <svg class="chart" width="800" height="500"></svg>
     <button id="goButton">Go</button>
     <script>
@@ -30,7 +30,7 @@
                 .data(values)
                 .enter().append("rect")
                 .attr("width", barWidth)
-                .attr("height", function(d) { return d / 1000; })
+                .attr("height", function(d) { return d / 1000 - 440; })
                 .attr("x", function(d, i) { return i * (barWidth + barPadding); })
                 .attr("y", function(d) { return chartHeight - d / 1000; });
         });
