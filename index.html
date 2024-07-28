@@ -13,16 +13,23 @@
     <svg class="chart" width="120" height="500"></svg>
     <button id="goButton">Go</button>
     <script>
-        var data = [4, 8, 15, 16, 23, 42];
-        document.getElementById("data").innerHTML = data;
-        d3.select(".chart")
-            .selectAll("rect")
-            .data(data)
-            .enter().append("rect")
-            .attr("width", 19)
-            .attr("height", function(d) { return d * 10; })
-            .attr("x", function(d, i) { return i * 20; })
-            .attr("y", function(d) { return 420 - d * 10; });
+        // Load the data from CSV file
+        d3.csv("data.csv", function(error, data) {
+            if (error) throw error;
+
+            // Extract values from the data
+            var values = data.map(function(d) { return +d.value; });
+            document.getElementById("data").innerHTML = values;
+
+            d3.select(".chart")
+                .selectAll("rect")
+                .data(values)
+                .enter().append("rect")
+                .attr("width", 19)
+                .attr("height", function(d) { return d * 10; })
+                .attr("x", function(d, i) { return i * 20; })
+                .attr("y", function(d) { return 420 - d * 10; });
+        });
 
         document.getElementById("goButton").addEventListener("click", function() {
             window.location.href = "8-2-6_answer.html";
