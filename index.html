@@ -10,7 +10,7 @@
 </head>
 <body>
     <p>Here are the magic numbers from Lost: <span id="csvdata"></span></p>
-    <svg class="chart" width="800" height="1200"></svg>
+    <svg class="chart" width="240" height="1000"></svg>
     <button id="goButton">Go</button>
     <script>
         // Load the data from CSV file
@@ -28,7 +28,7 @@
                 .attr("width", 19)
                 .attr("height", function(d) { return d * 10; })
                 .attr("x", function(d, i) { return i * 20; })
-                .attr("y", function(d) { return 1000 - d * 10; });
+                .attr("y", function(d) { return 840 - d * 10; });
         });
 
         document.getElementById("goButton").addEventListener("click", function() {
