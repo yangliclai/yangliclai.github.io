@@ -18,7 +18,7 @@
             if (error) throw error;
 
             // Extract values from the data
-            var values = data.map(function(d) { return +d.value; });
+            var values = data.map(function(d) { return +d.data; });
             document.getElementById("data").innerHTML = values;
 
             d3.select(".chart")
