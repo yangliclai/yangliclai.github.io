@@ -1,0 +1,49 @@
+<html>
+<script src='https://d3js.org/d3.v5.min.js'></script>
+<style> 
+circle { 
+    fill: lightblue; 
+    stroke: black; 
+} 
+</style>
+<body onload='init()'>
+<svg width=300 height=300>
+</svg>
+<script>
+async function init() {
+    const data = await d3.csv("https://flunky.github.io/cars2017.csv");
+    const svg = d3.select("svg").append("g").attr("transform", "translate(50,50)");
+
+    const xScale = d3.scaleLog().domain([10, 150]).range([0, 200]);
+    const yScale = d3.scaleLog().domain([10, 150]).range([200, 0]);
+
+    const xAxis = d3.axisBottom(xScale)
+        .tickValues([10, 20, 50, 100])
+        .tickFormat(d3.format("~s"));
+
+    const yAxis = d3.axisLeft(yScale)
+        .tickValues([10, 20, 50, 100])
+        .tickFormat(d3.format("~s"));
+
+    // Render the circles first
+    svg.selectAll("circle")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("cx", d => xScale(d["AverageCityMPG"]))
+        .attr("cy", d => yScale(d["AverageHighwayMPG"]))
+        .attr("r", d => 2 + +d["EngineCylinders"]);
+
+    // Render the y-axis next
+    svg.append("g")
+        .attr("transform", "translate(50,50)")
+        .call(yAxis);
+
+    // Render the x-axis last
+    svg.append("g")
+        .attr("transform", "translate(50,250)")
+        .call(xAxis);
+}
+</script>
+</body>
+</html>
