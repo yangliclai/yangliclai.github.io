@@ -18,8 +18,8 @@
             if (error) throw error;
 
             // Extract values from the data
-            var values = data.map(function(d) { return +d["EGI(Total_Revenue)"]; });
-            document.getElementById("csvdata").innerHTML = values.join(", ");
+            var values = data.map(function(d) { return +d.csvdata; });
+            document.getElementById("csvdata").innerHTML = values;
 
             d3.select(".chart")
                 .selectAll("rect")
