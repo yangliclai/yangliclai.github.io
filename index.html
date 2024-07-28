@@ -9,7 +9,7 @@
     </style>
 </head>
 <body>
-    <p>Here are the magic numbers from Lost: <span id="data"></span></p>
+    <p>Here are the magic numbers from Lost: <span id="csvdata"></span></p>
     <svg class="chart" width="120" height="500"></svg>
     <button id="goButton">Go</button>
     <script>
@@ -18,8 +18,8 @@
             if (error) throw error;
 
             // Extract values from the data
-            var values = data.map(function(d) { return +d.data; });
-            document.getElementById("data").innerHTML = values;
+            var values = data.map(function(d) { return +d.csvdata; });
+            document.getElementById("csvdata").innerHTML = values;
 
             d3.select(".chart")
                 .selectAll("rect")
