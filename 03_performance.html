@@ -1,7 +1,7 @@
 <html>
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <style>
-    path {stroke: green;}  <!-- Changed the stroke color to green -->
+    path {stroke: green;}  /* Main line color */
     .grid line {
         stroke: lightgrey;
         stroke-opacity: 0.3;
@@ -9,6 +9,12 @@
     }
     .grid path {
         stroke-width: 0;
+    }
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: black;
+        shape-rendering: crispEdges;
     }
 </style>
 <body>
@@ -54,17 +60,19 @@ d3.csv("data04.csv").then(function(data) {
 
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
+        .attr("class", "axis")
         .call(d3.axisBottom(x).ticks(values.length).tickFormat(function(d, i) {
             return ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06"][i];
         }));
 
     svg.append("g")
+        .attr("class", "axis")
         .call(d3.axisLeft(y));
 
     svg.append("path")
         .datum(values)
         .attr("fill", "none")
-        .attr("stroke", "green")  <!-- Changed the stroke color to green -->
+        .attr("stroke", "green")  /* Main line color */
         .attr("stroke-width", 1.5)
         .attr("d", line);
 
