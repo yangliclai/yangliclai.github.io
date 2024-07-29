@@ -31,7 +31,7 @@
             var chartWidth = 500;
             var barWidth = 30;
             var barPadding = 20;
-            var margin = {top: 20, right: 20, bottom: 40, left: 40};
+            var margin = {top: 20, right: 20, bottom: 40, left: 50};
             var height = chartHeight - margin.top - margin.bottom;
             var width = chartWidth - margin.left - margin.right;
 
@@ -49,7 +49,8 @@
 
             var yAxis = d3.svg.axis()
                 .scale(yScale)
-                .orient("left");
+                .orient("left")
+                .tickFormat(d3.format(".2f"));
 
             var svg = d3.select(".chart")
                 .attr("width", chartWidth)
@@ -79,7 +80,13 @@
 
             svg.append("g")
                 .attr("class", "y axis")
-                .call(yAxis);
+                .call(yAxis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", "-2.5em")
+                .style("text-anchor", "end")
+                .text("Revenue (in k)");
         });
 
         document.getElementById("goButton").addEventListener("click", function() {
