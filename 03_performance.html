@@ -1,6 +1,16 @@
 <html>
 <script src="https://d3js.org/d3.v5.min.js"></script>
-<style> path {stroke: black;}</style>
+<style>
+    path {stroke: black;}
+    .grid line {
+        stroke: lightgrey;
+        stroke-opacity: 0.7;
+        shape-rendering: crispEdges;
+    }
+    .grid path {
+        stroke-width: 0;
+    }
+</style>
 <body>
 <svg width=500 height=300></svg>
 <button id="drillDownButton">Next Drill Down</button>
@@ -26,9 +36,21 @@ d3.csv("data04.csv").then(function(data) {
         .domain([d3.min(values), d3.max(values)])
         .range([height, 0]);
 
+    var make_x_gridlines = () => d3.axisBottom(x).ticks(values.length);
+    var make_y_gridlines = () => d3.axisLeft(y).ticks(10);
+
     var line = d3.line()
         .x(function(d, i) { return x(i); })
         .y(function(d) { return y(d); });
+
+    svg.append("g")
+        .attr("class", "grid")
+        .attr("transform", "translate(0," + height + ")")
+        .call(make_x_gridlines().tickSize(-height).tickFormat(""));
+
+    svg.append("g")
+        .attr("class", "grid")
+        .call(make_y_gridlines().tickSize(-width).tickFormat(""));
 
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
