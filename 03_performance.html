@@ -1,117 +1,43 @@
+<!DOCTYPE html>
 <html>
-<script src="https://d3js.org/d3.v5.min.js"></script>
-<style>
-    .grid line {
-        stroke: lightgrey;
-        stroke-opacity: 0.3;
-        shape-rendering: crispEdges;
-    }
-    .grid path {
-        stroke-width: 0;
-    }
-    .axis path,
-    .axis line {
-        fill: none;
-        stroke: black;
-        shape-rendering: crispEdges;
-    }
-</style>
+<head>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <style>
+        .chart rect {
+            fill: steelblue;
+        }
+    </style>
+</head>
 <body>
-<svg id="chart1" width=600 height=400></svg>
-<svg id="chart2" width=600 height=400></svg>
-<button id="drillDownButton">Drill_Down</button>
-<script>
-// Function to draw line chart
-function drawLineChart(svgId, csvFile, title, yLabel, lineColor) {
-    d3.csv(csvFile).then(function(data) {
-        // Extract values from the data
-        var values = data.map(function(d) { return +d.csvdata; });
+    <p>2024 first 6 month Revenue is : <span id="csvdata"></span></p>
+    <svg class="chart" width="300" height="500"></svg>
+    <button id="goButton">Back</button>
+    <script>
+        // Load the data from CSV file
+        d3.csv("data02.csv", function(error, data) {
+            if (error) throw error;
 
-        var margin = {top: 50, right: 30, bottom: 50, left: 50},
-            width = 600 - margin.left - margin.right,
-            height = 400 - margin.top - margin.bottom;
+            // Extract values from the data
+            var values = data.map(function(d) { return +d.csvdata; });
+            document.getElementById("csvdata").innerHTML = values;
 
-        var svg = d3.select(svgId)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            var chartHeight = 500;
+            var barWidth = 30;
+            var barPadding = 20;
 
-        var x = d3.scaleLinear()
-            .domain([0, values.length - 1])
-            .range([0, width]);
+            d3.select(".chart")
+                .selectAll("rect")
+                .data(values)
+                .enter().append("rect")
+                .attr("width", barWidth)
+                .attr("height", function(d) { return d / 1000 ; })
+                .attr("x", function(d, i) { return i * (barWidth + barPadding); })
+                .attr("y", function(d) { return chartHeight - d / 1000; });
+        });
 
-        var y = d3.scaleLinear()
-            .domain([d3.min(values), d3.max(values)])
-            .range([height, 0]);
-
-        var make_x_gridlines = () => d3.axisBottom(x).ticks(values.length);
-        var make_y_gridlines = () => d3.axisLeft(y).ticks(10);
-
-        var line = d3.line()
-            .x(function(d, i) { return x(i); })
-            .y(function(d) { return y(d); });
-
-        svg.append("g")
-            .attr("class", "grid")
-            .attr("transform", "translate(0," + height + ")")
-            .call(make_x_gridlines().tickSize(-height).tickFormat(""));
-
-        svg.append("g")
-            .attr("class", "grid")
-            .call(make_y_gridlines().tickSize(-width).tickFormat(""));
-
-        svg.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .attr("class", "axis")
-            .call(d3.axisBottom(x).ticks(values.length).tickFormat(function(d, i) {
-                return ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06"][i];
-            }));
-
-        svg.append("g")
-            .attr("class", "axis")
-            .call(d3.axisLeft(y));
-
-        svg.append("path")
-            .datum(values)
-            .attr("fill", "none")
-            .attr("stroke", lineColor)  /* Main line color */
-            .attr("stroke-width", 1.5)
-            .attr("d", line);
-
-        // Add x-axis label
-        svg.append("text")
-            .attr("transform", "translate(" + (width/2) + " ," + (height + margin.bottom - 10) + ")")
-            .style("text-anchor", "middle")
-            .text("Month");
-
-        // Add y-axis label
-        svg.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left)
-            .attr("x", 0 - (height / 2))
-            .attr("dy", "1em")
-            .style("text-anchor", "middle")
-            .text(yLabel);
-
-        // Add chart title
-        svg.append("text")
-            .attr("transform", "translate(" + (width / 2) + " ," + -20 + ")")
-            .style("text-anchor", "middle")
-            .style("font-size", "16px")
-            .style("font-weight", "bold")
-            .text(title);
-    });
-}
-
-// Draw the first line chart
-drawLineChart("#chart1", "data04.csv", "Rental Profit Performance trend in 2024 1st 6 month (Higher is better)", "Profit/Revenue %", "green");
-
-// Draw the second line chart
-drawLineChart("#chart2", "data05.csv", "Rental Delinquency Performance trend in 2024 1st 6 month (Lower is better)", "Delinquency/Revenue %", "red");
-
-// Add event listener to the button
-document.getElementById("drillDownButton").addEventListener("click", function() {
-    window.location.href = "02_Rev_Bearkdown.html";
-});
-</script>
+        document.getElementById("goButton").addEventListener("click", function() {
+            window.location.href = "02_Rev_Bearkdown.html";
+        });
+    </script>
 </body>
 </html>
