@@ -30,7 +30,7 @@
                 .data(values)
                 .enter().append("rect")
                 .attr("width", barWidth)
-                .attr("height", function(d) { return d / 1000 - 420; })
+                .attr("height", function(d) { return d / 1000 ; })
                 .attr("x", function(d, i) { return i * (barWidth + barPadding); })
                 .attr("y", function(d) { return chartHeight - d / 1000; });
         });
