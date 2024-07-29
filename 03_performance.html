@@ -12,6 +12,18 @@
             shape-rendering: crispEdges;
             stroke: black;
         }
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            width: 120px;
+            height: 28px;
+            padding: 2px;
+            font: 12px sans-serif;
+            background: lightsteelblue;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -19,6 +31,11 @@
     <svg class="chart" width="600" height="500"></svg>
     <button id="goButton">Back</button>
     <script>
+        // Create a tooltip div
+        var tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
         // Load the data from CSV file
         d3.csv("data02.csv", function(error, data) {
             if (error) throw error;
@@ -63,7 +80,20 @@
                 .attr("width", xScale.rangeBand() * 2 / 3) // 2/3 of the current width
                 .attr("height", function(d) { return height - yScale(d); })
                 .attr("x", function(d, i) { return xScale("2024-" + String(i + 1).padStart(2, '0')) + xScale.rangeBand() / 6; }) // Centering the bars
-                .attr("y", function(d) { return yScale(d); });
+                .attr("y", function(d) { return yScale(d); })
+                .on("mouseover", function(d, i) {
+                    tooltip.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    tooltip.html("Revenue #" + (i + 1) + " month is " + d + " k$")
+                        .style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY - 28) + "px");
+                })
+                .on("mouseout", function(d) {
+                    tooltip.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
 
             svg.append("g")
                 .attr("class", "x axis")
