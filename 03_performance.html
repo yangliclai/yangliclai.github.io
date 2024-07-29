@@ -12,7 +12,7 @@
     }
 </style>
 <body>
-<svg width=500 height=300></svg>
+<svg width=600 height=400></svg>
 <button id="drillDownButton">Next Drill Down</button>
 <script>
 // Load the data from CSV file
@@ -20,9 +20,9 @@ d3.csv("data04.csv").then(function(data) {
     // Extract values from the data
     var values = data.map(function(d) { return +d.csvdata; });
 
-    var margin = {top: 20, right: 30, bottom: 30, left: 40},
-        width = 500 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
+    var margin = {top: 50, right: 30, bottom: 50, left: 50},
+        width = 600 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
 
     var svg = d3.select("svg")
         .append("g")
@@ -67,6 +67,29 @@ d3.csv("data04.csv").then(function(data) {
         .attr("stroke", "steelblue")
         .attr("stroke-width", 1.5)
         .attr("d", line);
+
+    // Add x-axis label
+    svg.append("text")
+        .attr("transform", "translate(" + (width/2) + " ," + (height + margin.bottom - 10) + ")")
+        .style("text-anchor", "middle")
+        .text("Month");
+
+    // Add y-axis label
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Profit/Revenue %");
+
+    // Add chart title
+    svg.append("text")
+        .attr("transform", "translate(" + (width / 2) + " ," + -20 + ")")
+        .style("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-weight", "bold")
+        .text("Rental Profit Performance trend in 2024 1st 6 month");
 });
 
 // Add event listener to the button
