@@ -103,10 +103,10 @@ function drawLineChart(svgId, csvFile, title, yLabel, lineColor) {
 }
 
 // Draw the first line chart
-drawLineChart("#chart1", "data04.csv", "Rental Profit Performance trend in 2024 1st 6 month", "Profit/Revenue %", "green");
+drawLineChart("#chart1", "data04.csv", "Rental Profit Performance trend in 2024 1st 6 month (Higher is better)", "Profit/Revenue %", "green");
 
 // Draw the second line chart
-drawLineChart("#chart2", "data05.csv", "Rental Delinquency Performance trend in 2024 1st 6 month", "Delinquency/Revenue %", "red");
+drawLineChart("#chart2", "data05.csv", "Rental Delinquency Performance trend in 2024 1st 6 month (Lower is better)", "Delinquency/Revenue %", "red");
 
 // Add event listener to the button
 document.getElementById("drillDownButton").addEventListener("click", function() {
