@@ -1,0 +1,28 @@
+<html>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<style> path {stroke: black;}</style>
+<body>
+<svg width=300 height=300></svg>
+<script>
+// Load the data from CSV file
+d3.csv("data03.csv").then(function(data) {
+    // Extract values from the data
+    var values = data.map(function(d) { return + d.csvdata; });
+    var color = ['pink', 'lightyellow', 'lightgreen', 'lightcyan'];
+    var pie = d3.pie();
+    var arc = d3.arc().innerRadius(0).outerRadius(100);
+
+    var svg = d3.select("svg")
+        .append("g")
+        .attr("transform", "translate(150,150)");
+
+    svg.selectAll("path")
+        .data(pie(values))
+        .enter()
+        .append("path")
+        .attr("d", arc)
+        .attr("fill", function(d, i) { return color[i]; });
+});
+</script>
+</body>
+</html>
