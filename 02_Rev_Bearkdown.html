@@ -2,46 +2,59 @@
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <style> path {stroke: black;}</style>
 <body>
-<svg width=300 height=300></svg>
+<svg id="chart1" width=300 height=300></svg>
+<svg id="chart2" width=300 height=300></svg>
+<svg id="chart3" width=300 height=300></svg>
 <button id="drillDownButton">Drill Down</button>
 <script>
-// Load the data from CSV file
-d3.csv("data03_01.csv").then(function(data) {
-    // Extract values from the data
-    var values = data.map(function(d) { return +d.csvdata; });
-    var categories = data.map(function(d) { return d.category; });
-    var color = ['pink', 'lightyellow', 'lightgreen', 'lightcyan'];
-    var pie = d3.pie();
-    var arc = d3.arc().innerRadius(0).outerRadius(100);
+// Function to draw pie chart
+function drawPieChart(svgId, csvFile, title) {
+    d3.csv(csvFile).then(function(data) {
+        // Extract values from the data
+        var values = data.map(function(d) { return +d.csvdata; });
+        var categories = data.map(function(d) { return d.category; });
+        var color = ['pink', 'lightyellow', 'lightgreen', 'lightcyan'];
+        var pie = d3.pie();
+        var arc = d3.arc().innerRadius(0).outerRadius(100);
 
-    var svg = d3.select("svg")
-        .append("g")
-        .attr("transform", "translate(150,150)");
+        var svg = d3.select(svgId)
+            .append("g")
+            .attr("transform", "translate(150,150)");
 
-    // Add title
-    svg.append("text")
-        .attr("x", 0)
-        .attr("y", -140)
-        .attr("text-anchor", "middle")
-        .style("font-size", "16px")
-        .style("font-weight", "bold")
-        .text("2024_01 Revenue Breakdown");
+        // Add title
+        svg.append("text")
+            .attr("x", 0)
+            .attr("y", -140)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("font-weight", "bold")
+            .text(title);
 
-    var g = svg.selectAll(".arc")
-        .data(pie(values))
-        .enter().append("g")
-        .attr("class", "arc");
+        var g = svg.selectAll(".arc")
+            .data(pie(values))
+            .enter().append("g")
+            .attr("class", "arc");
 
-    g.append("path")
-        .attr("d", arc)
-        .attr("fill", function(d, i) { return color[i]; });
+        g.append("path")
+            .attr("d", arc)
+            .attr("fill", function(d, i) { return color[i]; });
 
-    g.append("text")
-        .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-        .attr("dy", ".35em")
-        .style("text-anchor", "middle")
-        .text(function(d, i) { return categories[i]; });
-});
+        g.append("text")
+            .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+            .attr("dy", ".35em")
+            .style("text-anchor", "middle")
+            .text(function(d, i) { return categories[i]; });
+    });
+}
+
+// Draw the first pie chart
+drawPieChart("#chart1", "data03_01.csv", "2024_01 Revenue Breakdown");
+
+// Draw the second pie chart
+drawPieChart("#chart2", "data03_02.csv", "2024_02 Revenue Breakdown");
+
+// Draw the third pie chart
+drawPieChart("#chart3", "data03_03.csv", "2024_03 Revenue Breakdown");
 
 // Add event listener to the button
 document.getElementById("drillDownButton").addEventListener("click", function() {
