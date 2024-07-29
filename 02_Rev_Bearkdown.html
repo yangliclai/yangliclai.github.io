@@ -1,10 +1,16 @@
 <html>
 <script src="https://d3js.org/d3.v5.min.js"></script>
-<style> path {stroke: black;}</style>
+<style> 
+    path {stroke: black;}
+    button {
+        margin: 5px;
+    }
+</style>
 <body>
 <svg id="chart1" width=300 height=300></svg>
 <svg id="chart2" width=300 height=300></svg>
 <svg id="chart3" width=300 height=300></svg>
+<button id="backButton">Back</button>
 <button id="drillDownButton">Drill Down</button>
 <script>
 // Function to draw pie chart
@@ -56,7 +62,11 @@ drawPieChart("#chart2", "data03_02.csv", "2024_02 Revenue Breakdown");
 // Draw the third pie chart
 drawPieChart("#chart3", "data03_03.csv", "2024_03 Revenue Breakdown");
 
-// Add event listener to the button
+// Add event listener to the buttons
+document.getElementById("backButton").addEventListener("click", function() {
+    window.location.href = "index.html";
+});
+
 document.getElementById("drillDownButton").addEventListener("click", function() {
     window.location.href = "03_performance.html";
 });
