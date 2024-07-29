@@ -18,6 +18,15 @@ d3.csv("data03_06.csv").then(function(data) {
         .append("g")
         .attr("transform", "translate(150,150)");
 
+    // Add title
+    svg.append("text")
+        .attr("x", 0)
+        .attr("y", -140)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-weight", "bold")
+        .text("2024_06 Revenue Breakdown");
+
     var g = svg.selectAll(".arc")
         .data(pie(values))
         .enter().append("g")
