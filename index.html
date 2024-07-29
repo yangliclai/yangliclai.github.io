@@ -19,14 +19,14 @@
 
             // Extract values from the data
             var values = data.map(function(d) { return +d.csvdata; });
-            document.getElementById("csvdata").innerHTML = values;
+            document.getElementById("csvdata").innerHTML = values.join(","); // Correctly display the values
 
-            var margin = {top: 20, right: 30, bottom: 30, left: 50},
+            var margin = {top: 20, right: 30, bottom: 50, left: 50},
                 width = 700 - margin.left - margin.right,
                 height = 500 - margin.top - margin.bottom;
 
             var x = d3.scaleBand()
-                .domain(["2024-Jan", "2024-Feb", "2024-Mar", "2024-Apr", "2024-May", "2024-Jun"])
+                .domain([0, 1, 2, 3, 4, 5])
                 .range([0, width])
                 .padding(0.1);
 
@@ -44,7 +44,7 @@
                 .data(values)
               .enter().append("rect")
                 .attr("class", "bar")
-                .attr("x", function(d, i) { return x(x.domain()[i]); })
+                .attr("x", function(d, i) { return x(i); })
                 .attr("y", function(d) { return y(d / 1000); })
                 .attr("width", x.bandwidth())
                 .attr("height", function(d) { return height - y(d / 1000); });
@@ -52,11 +52,26 @@
             svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x));
+                .call(d3.axisBottom(x).tickFormat(function(d, i) {
+                    return ["2024-Jan", "2024-Feb", "2024-Mar", "2024-Apr", "2024-May", "2024-Jun"][i];
+                }));
 
             svg.append("g")
                 .attr("class", "y axis")
                 .call(d3.axisLeft(y));
+
+            svg.append("text")
+                .attr("transform", "translate(" + (width/2) + " ," + (height + margin.bottom) + ")")
+                .style("text-anchor", "middle")
+                .text("Month");
+
+            svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - margin.left)
+                .attr("x",0 - (height / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .text("Revenue (thousands)");
 
         });
 
