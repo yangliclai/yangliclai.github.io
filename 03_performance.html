@@ -27,7 +27,7 @@
     </style>
 </head>
 <body>
-    <p>2024 first 6 month Revenue is (unit:k) : <span id="csvdata"></span>Hover over each bar🖱😄!</p>
+    <p>2024 first 6 month Revenue is (unit:k) : <span id="csvdata"></span> <span style="font-weight: bold; font-size: large; color: red;">⭐TRY⭐Hover over each bar🖱😄!</span></p>
     <svg class="chart" width="600" height="500"></svg>
     <button id="goButton">Back</button>
     <script>
@@ -70,69 +70,4 @@
 
             var svg = d3.select(".chart")
                 .attr("width", chartWidth)
-                .attr("height", chartHeight)
-                .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-            svg.selectAll("rect")
-                .data(values)
-                .enter().append("rect")
-                .attr("width", xScale.rangeBand() * 2 / 3) // 2/3 of the current width
-                .attr("height", function(d) { return height - yScale(d); })
-                .attr("x", function(d, i) { return xScale("2024-" + String(i + 1).padStart(2, '0')) + xScale.rangeBand() / 6; }) // Centering the bars
-                .attr("y", function(d) { return yScale(d); })
-                .on("mouseover", function(d, i) {
-                    tooltip.transition()
-                        .duration(200)
-                        .style("opacity", .9);
-                    tooltip.html("Revenue #" + (i + 1) + " month is " + d + " k$")
-                        .style("left", (d3.event.pageX) + "px")
-                        .style("top", (d3.event.pageY - 28) + "px");
-                })
-                .on("mouseout", function(d) {
-                    tooltip.transition()
-                        .duration(500)
-                        .style("opacity", 0);
-                });
-
-            svg.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")")
-                .call(xAxis)
-                .selectAll("text")
-                .style("text-anchor", "middle")
-                .attr("dx", "0em")
-                .attr("dy", ".5em");
-
-            svg.append("g")
-                .attr("class", "y axis")
-                .call(yAxis)
-                .append("text")
-                .attr("transform", "rotate(-90)")
-                .attr("y", -margin.left + 30) // Increase the padding between the axis and the label
-                .attr("x", -height / 2)
-                .attr("dy", "1em")
-                .style("text-anchor", "middle")
-                .text("Detailed Revenue (k$)");
-
-            // Add x-axis label
-            svg.append("text")
-                .attr("transform", "translate(" + (width / 2) + " ," + (height + margin.bottom - 10) + ")")
-                .style("text-anchor", "middle")
-                .text("Month");
-
-            // Add chart title
-            svg.append("text")
-                .attr("transform", "translate(" + (width / 2) + " ," + -30 + ")") // Adjust for top margin
-                .style("text-anchor", "middle")
-                .style("font-size", "16px")
-                .style("font-weight", "bold")
-                .text("Rental Revenue Performance in the 1st 6 months of 2024 (unit : k$)");
-        });
-
-        document.getElementById("goButton").addEventListener("click", function() {
-            window.location.href = "02_Rev_Bearkdown.html";
-        });
-    </script>
-</body>
-</html>
+                .attr("height", chart
