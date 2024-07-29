@@ -33,7 +33,7 @@ d3.csv("data04.csv").then(function(data) {
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x).ticks(values.length).tickFormat(function(d, i) {
-            return "Value " + (i + 1);
+            return ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06"][i];
         }));
 
     svg.append("g")
