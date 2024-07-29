@@ -1,0 +1,56 @@
+<html>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<style> path {stroke: black;}</style>
+<body>
+<svg width=500 height=300></svg>
+<button id="drillDownButton">Next Drill Down</button>
+<script>
+// Load the data from CSV file
+d3.csv("data04.csv").then(function(data) {
+    // Extract values from the data
+    var values = data.map(function(d) { return +d.csvdata; });
+
+    var margin = {top: 20, right: 30, bottom: 30, left: 40},
+        width = 500 - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
+
+    var svg = d3.select("svg")
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var x = d3.scaleLinear()
+        .domain([0, values.length - 1])
+        .range([0, width]);
+
+    var y = d3.scaleLinear()
+        .domain([d3.min(values), d3.max(values)])
+        .range([height, 0]);
+
+    var line = d3.line()
+        .x(function(d, i) { return x(i); })
+        .y(function(d) { return y(d); });
+
+    svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x).ticks(values.length).tickFormat(function(d, i) {
+            return "Value " + (i + 1);
+        }));
+
+    svg.append("g")
+        .call(d3.axisLeft(y));
+
+    svg.append("path")
+        .datum(values)
+        .attr("fill", "none")
+        .attr("stroke", "steelblue")
+        .attr("stroke-width", 1.5)
+        .attr("d", line);
+});
+
+// Add event listener to the button
+document.getElementById("drillDownButton").addEventListener("click", function() {
+    window.location.href = "8-2-6_answer.html";
+});
+</script>
+</body>
+</html>
