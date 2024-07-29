@@ -23,7 +23,7 @@
 <button id="drillDownButton">Back</button>
 <script>
 // Function to draw line chart
-function drawLineChart(svgId, csvFile, title, yLabel) {
+function drawLineChart(svgId, csvFile, title, yLabel, lineColor) {
     d3.csv(csvFile).then(function(data) {
         // Extract values from the data
         var values = data.map(function(d) { return +d.csvdata; });
@@ -74,7 +74,7 @@ function drawLineChart(svgId, csvFile, title, yLabel) {
         svg.append("path")
             .datum(values)
             .attr("fill", "none")
-            .attr("stroke", "green")  /* Main line color */
+            .attr("stroke", lineColor)  /* Main line color */
             .attr("stroke-width", 1.5)
             .attr("d", line);
 
@@ -104,10 +104,10 @@ function drawLineChart(svgId, csvFile, title, yLabel) {
 }
 
 // Draw the first line chart
-drawLineChart("#chart1", "data04.csv", "Rental Profit Performance trend in 2024 1st 6 month", "Profit/Revenue %");
+drawLineChart("#chart1", "data04.csv", "Rental Profit Performance trend in 2024 1st 6 month", "Profit/Revenue %", "green");
 
 // Draw the second line chart
-drawLineChart("#chart2", "data05.csv", "Rental Delinquency Performance trend in 2024 1st 6 month", "Delinquency/Revenue %");
+drawLineChart("#chart2", "data05.csv", "Rental Delinquency Performance trend in 2024 1st 6 month", "Delinquency/Revenue %", "red");
 
 // Add event listener to the button
 document.getElementById("drillDownButton").addEventListener("click", function() {
