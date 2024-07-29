@@ -6,7 +6,7 @@
 <button id="drillDownButton">Drill Down</button>
 <script>
 // Load the data from CSV file
-d3.csv("data03_06.csv").then(function(data) {
+d3.csv("data03_01.csv").then(function(data) {
     // Extract values from the data
     var values = data.map(function(d) { return +d.csvdata; });
     var categories = data.map(function(d) { return d.category; });
