@@ -5,11 +5,22 @@
     button {
         margin: 5px;
     }
+    .chart-row {
+        display: flex;
+        justify-content: space-around;
+    }
 </style>
 <body>
-<svg id="chart1" width=300 height=300></svg>
-<svg id="chart2" width=300 height=300></svg>
-<svg id="chart3" width=300 height=300></svg>
+<div class="chart-row">
+    <svg id="chart1" width=300 height=300></svg>
+    <svg id="chart2" width=300 height=300></svg>
+    <svg id="chart3" width=300 height=300></svg>
+</div>
+<div class="chart-row">
+    <svg id="chart4" width=300 height=300></svg>
+    <svg id="chart5" width=300 height=300></svg>
+    <svg id="chart6" width=300 height=300></svg>
+</div>
 <button id="backButton">Back</button>
 <button id="drillDownButton">Drill Down</button>
 <script>
@@ -61,6 +72,15 @@ drawPieChart("#chart2", "data03_02.csv", "2024_02 Revenue Breakdown");
 
 // Draw the third pie chart
 drawPieChart("#chart3", "data03_03.csv", "2024_03 Revenue Breakdown");
+
+// Draw the fourth pie chart
+drawPieChart("#chart4", "data03_04.csv", "2024_04 Revenue Breakdown");
+
+// Draw the fifth pie chart
+drawPieChart("#chart5", "data03_05.csv", "2024_05 Revenue Breakdown");
+
+// Draw the sixth pie chart
+drawPieChart("#chart6", "data03_06.csv", "2024_06 Revenue Breakdown");
 
 // Add event listener to the buttons
 document.getElementById("backButton").addEventListener("click", function() {
