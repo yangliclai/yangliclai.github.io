@@ -39,7 +39,7 @@
                 .rangeRoundBands([0, width], .1);
 
             var yScale = d3.scale.linear()
-                .domain([0, d3.max(values)])
+                .domain([420, d3.max(values)]) // Set the y-axis to start from 420
                 .range([height, 0]);
 
             var xAxis = d3.svg.axis()
